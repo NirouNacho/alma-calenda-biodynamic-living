@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as HuertoSerenoRouteImport } from './routes/huerto-sereno'
+import { Route as CosmosBiodinamicoRouteImport } from './routes/cosmos-biodinamico'
 import { Route as IndexRouteImport } from './routes/index'
 
 const HuertoSerenoRoute = HuertoSerenoRouteImport.update({
   id: '/huerto-sereno',
   path: '/huerto-sereno',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CosmosBiodinamicoRoute = CosmosBiodinamicoRouteImport.update({
+  id: '/cosmos-biodinamico',
+  path: '/cosmos-biodinamico',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cosmos-biodinamico': typeof CosmosBiodinamicoRoute
   '/huerto-sereno': typeof HuertoSerenoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cosmos-biodinamico': typeof CosmosBiodinamicoRoute
   '/huerto-sereno': typeof HuertoSerenoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cosmos-biodinamico': typeof CosmosBiodinamicoRoute
   '/huerto-sereno': typeof HuertoSerenoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/huerto-sereno'
+  fullPaths: '/' | '/cosmos-biodinamico' | '/huerto-sereno'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/huerto-sereno'
-  id: '__root__' | '/' | '/huerto-sereno'
+  to: '/' | '/cosmos-biodinamico' | '/huerto-sereno'
+  id: '__root__' | '/' | '/cosmos-biodinamico' | '/huerto-sereno'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CosmosBiodinamicoRoute: typeof CosmosBiodinamicoRoute
   HuertoSerenoRoute: typeof HuertoSerenoRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/huerto-sereno'
       fullPath: '/huerto-sereno'
       preLoaderRoute: typeof HuertoSerenoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cosmos-biodinamico': {
+      id: '/cosmos-biodinamico'
+      path: '/cosmos-biodinamico'
+      fullPath: '/cosmos-biodinamico'
+      preLoaderRoute: typeof CosmosBiodinamicoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CosmosBiodinamicoRoute: CosmosBiodinamicoRoute,
   HuertoSerenoRoute: HuertoSerenoRoute,
 }
 export const routeTree = rootRouteImport
