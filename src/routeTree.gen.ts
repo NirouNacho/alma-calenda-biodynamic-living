@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MisticismoOrganicoRouteImport } from './routes/misticismo-organico'
 import { Route as HuertoSerenoRouteImport } from './routes/huerto-sereno'
 import { Route as CosmosBiodinamicoRouteImport } from './routes/cosmos-biodinamico'
 import { Route as IndexRouteImport } from './routes/index'
 
+const MisticismoOrganicoRoute = MisticismoOrganicoRouteImport.update({
+  id: '/misticismo-organico',
+  path: '/misticismo-organico',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HuertoSerenoRoute = HuertoSerenoRouteImport.update({
   id: '/huerto-sereno',
   path: '/huerto-sereno',
@@ -33,34 +39,54 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cosmos-biodinamico': typeof CosmosBiodinamicoRoute
   '/huerto-sereno': typeof HuertoSerenoRoute
+  '/misticismo-organico': typeof MisticismoOrganicoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cosmos-biodinamico': typeof CosmosBiodinamicoRoute
   '/huerto-sereno': typeof HuertoSerenoRoute
+  '/misticismo-organico': typeof MisticismoOrganicoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cosmos-biodinamico': typeof CosmosBiodinamicoRoute
   '/huerto-sereno': typeof HuertoSerenoRoute
+  '/misticismo-organico': typeof MisticismoOrganicoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cosmos-biodinamico' | '/huerto-sereno'
+  fullPaths:
+    | '/'
+    | '/cosmos-biodinamico'
+    | '/huerto-sereno'
+    | '/misticismo-organico'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cosmos-biodinamico' | '/huerto-sereno'
-  id: '__root__' | '/' | '/cosmos-biodinamico' | '/huerto-sereno'
+  to: '/' | '/cosmos-biodinamico' | '/huerto-sereno' | '/misticismo-organico'
+  id:
+    | '__root__'
+    | '/'
+    | '/cosmos-biodinamico'
+    | '/huerto-sereno'
+    | '/misticismo-organico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CosmosBiodinamicoRoute: typeof CosmosBiodinamicoRoute
   HuertoSerenoRoute: typeof HuertoSerenoRoute
+  MisticismoOrganicoRoute: typeof MisticismoOrganicoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/misticismo-organico': {
+      id: '/misticismo-organico'
+      path: '/misticismo-organico'
+      fullPath: '/misticismo-organico'
+      preLoaderRoute: typeof MisticismoOrganicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/huerto-sereno': {
       id: '/huerto-sereno'
       path: '/huerto-sereno'
@@ -89,6 +115,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CosmosBiodinamicoRoute: CosmosBiodinamicoRoute,
   HuertoSerenoRoute: HuertoSerenoRoute,
+  MisticismoOrganicoRoute: MisticismoOrganicoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
